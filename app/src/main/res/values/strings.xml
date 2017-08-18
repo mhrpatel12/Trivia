@@ -16,4 +16,7 @@
     <string name="type_of_questionaire">type of questionaire</string>
     <string name="option">Some Option</string>
     <string name="question">Some sort of question</string>
+    <string name="title_get_score">Get score !</string>
+    <string name="error_incomplete_answers">Please complete all answers!</string>
+    <string name="message_score">Your score is -</string>
 </resources>
