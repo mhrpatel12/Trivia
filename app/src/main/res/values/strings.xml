@@ -12,4 +12,8 @@
     <string name="type_multiple">Multiple Choice</string>
     <string name="type_boolean">True / False</string>
     <string name="message_fetching_categories">Fetching categories . . .</string>
+    <string name="list">list</string>
+    <string name="type_of_questionaire">type of questionaire</string>
+    <string name="option">Some Option</string>
+    <string name="question">Some sort of question</string>
 </resources>

@@ -2,8 +2,10 @@ package com.mhr.trivia.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
@@ -111,7 +113,7 @@ public class ChooserActivity extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 String categoryID = "";
                 String difficulty = "";
                 for (Category c : categoriesResponseList) {
@@ -136,15 +138,20 @@ public class ChooserActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<TriviaResponse> call, Response<TriviaResponse> response) {
                         questionList = new ArrayList<>(response.body().getQuestionList());
+                        Intent intent = new Intent(mContext, QuestionaireActivity.class);
+                        intent.putExtra(getString(R.string.list), new ArrayList<>(response.body().getQuestionList()));
+                        intent.putExtra(getString(R.string.type_of_questionaire), spinnerType.getSelectedItem().toString());
+                        startActivity(intent);
                     }
 
                     @Override
                     public void onFailure(Call<TriviaResponse> call, Throwable t) {
                         Log.e(TAG, t.toString());
+                        Snackbar.make(view, t.toString() + "", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
                     }
                 });
-/*                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+/**/
             }
         });
     }
