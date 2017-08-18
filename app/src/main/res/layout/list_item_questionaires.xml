@@ -15,12 +15,13 @@
             android:layout_height="wrap_content"
             android:background="@drawable/background_card"
             android:orientation="vertical"
-            android:padding="@dimen/fab_margin">
+            android:padding="@dimen/margin_radio_button">
 
             <TextView
                 android:id="@+id/txtQuestion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/margin_radio_button"
                 android:text="@string/question"
                 android:textColor="@android:color/black" />
 
@@ -28,7 +29,7 @@
                 android:id="@+id/layoutMultiChoice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fab_margin"
+                android:layout_marginTop="@dimen/margin_radio_button"
                 android:orientation="vertical"
                 android:visibility="visible">
 
