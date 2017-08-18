@@ -5,7 +5,7 @@
     <string name="prompt_number_of_questions">Number of Questions</string>
     <string name="difficulty_easy">Easy</string>
     <string name="difficulty_medium">Medium</string>
-    <string name="difficulty_difficult">Difficult]</string>
+    <string name="difficulty_difficult">Difficult</string>
     <string name="difficulty_difficult_api">hard</string>
     <string name="difficulty_easy_api">easy</string>
     <string name="difficulty_medium_api">medium</string>
@@ -19,4 +19,12 @@
     <string name="title_get_score">Get score !</string>
     <string name="error_incomplete_answers">Please complete all answers!</string>
     <string name="message_score">Your score is -</string>
+    <string name="category">Categories</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="type">Type</string>
+    <string name="message_fetching_questions">Fetching questions . . .</string>
+    <string name="error_max_questions">A Maximum of 50 Questions can be retrieved per call.</string>
+    <string name="error_no_results">No Results</string>
+    <string name="error_invalid_parameter">Invalid Parameter</string>
+    <string name="error_specify_numbers">Please enter number of questions you want to retrieve</string>
 </resources>

@@ -91,22 +91,24 @@ public class ChooserActivity extends AppCompatActivity {
         categoriesServiceCall.enqueue(new Callback<CategoriesResponse>() {
             @Override
             public void onResponse(Call<CategoriesResponse> call, Response<CategoriesResponse> response) {
+                if (mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                }
+
                 categoriesResponseList = new ArrayList<Category>(response.body().getCategory());
                 for (Category category : response.body().getCategory()) {
                     listCategories.add(category.getName());
                 }
                 adapterCategories.notifyDataSetChanged();
-                if (mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
-                }
             }
 
             @Override
             public void onFailure(Call<CategoriesResponse> call, Throwable t) {
-                Log.e(TAG, t.toString());
                 if (mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
+
+                Log.e(TAG, t.toString());
             }
         });
 
@@ -114,6 +116,22 @@ public class ChooserActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                if (edtNumberOfQuestions.getText().toString().trim().equals("")) {
+                    Snackbar.make(view, getString(R.string.error_specify_numbers), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    return;
+                }
+                if (Integer.parseInt(edtNumberOfQuestions.getText().toString().trim()) > 50) {
+                    Snackbar.make(view, getString(R.string.error_max_questions), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    return;
+                }
+                mProgressDialog = new ProgressDialog(mContext);
+                mProgressDialog.setMessage(getString(R.string.message_fetching_questions));
+                if (!mProgressDialog.isShowing()) {
+                    mProgressDialog.show();
+                }
+
                 String categoryID = "";
                 String difficulty = "";
                 for (Category c : categoriesResponseList) {
@@ -137,21 +155,35 @@ public class ChooserActivity extends AppCompatActivity {
                 triviaServiceCall.enqueue(new Callback<TriviaResponse>() {
                     @Override
                     public void onResponse(Call<TriviaResponse> call, Response<TriviaResponse> response) {
-                        questionList = new ArrayList<>(response.body().getQuestionList());
-                        Intent intent = new Intent(mContext, QuestionaireActivity.class);
-                        intent.putExtra(getString(R.string.list), new ArrayList<>(response.body().getQuestionList()));
-                        intent.putExtra(getString(R.string.type_of_questionaire), spinnerType.getSelectedItem().toString());
-                        startActivity(intent);
+                        if (mProgressDialog.isShowing()) {
+                            mProgressDialog.dismiss();
+                        }
+                        if (response.body().getResponseCode() == 0) {
+                            questionList = new ArrayList<>(response.body().getQuestionList());
+                            Intent intent = new Intent(mContext, QuestionaireActivity.class);
+                            intent.putExtra(getString(R.string.list), new ArrayList<>(response.body().getQuestionList()));
+                            intent.putExtra(getString(R.string.type_of_questionaire), spinnerType.getSelectedItem().toString());
+                            startActivity(intent);
+                        } else if (response.body().getResponseCode() == 1) {
+                            Snackbar.make(view, getString(R.string.error_no_results), Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        } else if (response.body().getResponseCode() == 2) {
+                            Snackbar.make(view, getString(R.string.error_invalid_parameter), Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
                     }
 
                     @Override
                     public void onFailure(Call<TriviaResponse> call, Throwable t) {
+                        if (mProgressDialog.isShowing()) {
+                            mProgressDialog.dismiss();
+                        }
+
                         Log.e(TAG, t.toString());
                         Snackbar.make(view, t.toString() + "", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }
                 });
-/**/
             }
         });
     }

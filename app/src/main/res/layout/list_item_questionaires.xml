@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fab_margin"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <com.mhr.trivia.ui.RelativeRadioGroup
                     android:id="@+id/radioGroupMultiOptions"
@@ -93,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fab_margin"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <com.mhr.trivia.ui.RelativeRadioGroup
                     android:id="@+id/radioGroupBooleanOptions"
