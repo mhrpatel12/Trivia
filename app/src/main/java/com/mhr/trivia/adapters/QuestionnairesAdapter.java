@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mhr.trivia.R;
-import com.mhr.trivia.interfaces.AnswerListner;
+import com.mhr.trivia.interfaces.AnswerListener;
 import com.mhr.trivia.model.Trivia.Question;
 import com.mhr.trivia.ui.RelativeRadioGroup;
 
@@ -29,15 +29,15 @@ public class QuestionnairesAdapter extends RecyclerView.Adapter<QuestionnairesAd
     private int rowLayout;
     private Context mContext;
     private List<ArrayList<String>> listShuffledAnswers;
-    private AnswerListner answerListner;
+    private AnswerListener answerListener;
     private String questionnaireType = "";
 
-    public QuestionnairesAdapter(List<Question> listQuestionnaires, List<ArrayList<String>> listShuffledAnswers, AnswerListner answerListner, String questionnaireType, int rowLayout, Context context) {
+    public QuestionnairesAdapter(List<Question> listQuestionnaires, List<ArrayList<String>> listShuffledAnswers, AnswerListener answerListener, String questionnaireType, int rowLayout, Context context) {
         this.listQuestionnaires = listQuestionnaires;
         this.listShuffledAnswers = listShuffledAnswers;
         this.rowLayout = rowLayout;
         this.mContext = context;
-        this.answerListner = answerListner;
+        this.answerListener = answerListener;
         this.questionnaireType = questionnaireType;
     }
 
@@ -65,12 +65,12 @@ public class QuestionnairesAdapter extends RecyclerView.Adapter<QuestionnairesAd
                 public void onCheckedChanged(RelativeRadioGroup group, @IdRes int checkedId) {
                     AppCompatRadioButton radioButton = (AppCompatRadioButton) holder.itemView.findViewById(checkedId);
                     if (radioButton.getText().equals(Html.fromHtml(listQuestionnaires.get(position).getCorrect_answer()))) {
-                        if (answerListner != null) {
-                            answerListner.updateAnswer(position, true);
+                        if (answerListener != null) {
+                            answerListener.updateAnswer(position, true);
                         }
                     } else {
-                        if (answerListner != null) {
-                            answerListner.updateAnswer(position, false);
+                        if (answerListener != null) {
+                            answerListener.updateAnswer(position, false);
                         }
                     }
                 }
@@ -87,12 +87,12 @@ public class QuestionnairesAdapter extends RecyclerView.Adapter<QuestionnairesAd
                 public void onCheckedChanged(RelativeRadioGroup group, @IdRes int checkedId) {
                     AppCompatRadioButton radioButton = (AppCompatRadioButton) holder.itemView.findViewById(checkedId);
                     if (radioButton.getText().equals(listQuestionnaires.get(position).getCorrect_answer())) {
-                        if (answerListner != null) {
-                            answerListner.updateAnswer(position, true);
+                        if (answerListener != null) {
+                            answerListener.updateAnswer(position, true);
                         }
                     } else {
-                        if (answerListner != null) {
-                            answerListner.updateAnswer(position, false);
+                        if (answerListener != null) {
+                            answerListener.updateAnswer(position, false);
                         }
                     }
                 }

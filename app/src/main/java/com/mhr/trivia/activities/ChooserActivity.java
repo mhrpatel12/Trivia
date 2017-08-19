@@ -160,7 +160,7 @@ public class ChooserActivity extends AppCompatActivity {
                         }
                         if (response.body().getResponseCode() == 0) {
                             questionList = new ArrayList<>(response.body().getQuestionList());
-                            Intent intent = new Intent(mContext, QuestionaireActivity.class);
+                            Intent intent = new Intent(mContext, QuestionnaireActivity.class);
                             intent.putExtra(getString(R.string.list), new ArrayList<>(response.body().getQuestionList()));
                             intent.putExtra(getString(R.string.type_of_questionaire), spinnerType.getSelectedItem().toString());
                             startActivity(intent);

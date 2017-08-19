@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.QuestionaireActivity"
+            android:name=".activities.QuestionnaireActivity"
             android:screenOrientation="portrait"></activity>
     </application>
 

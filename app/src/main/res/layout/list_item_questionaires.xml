@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_radio_button"
                         android:layout_toStartOf="@+id/anchor"
-                        android:background="@drawable/rbtn_selector"
+                        android:background="@drawable/radiobutton_selector"
                         android:button="@null"
                         android:text="@string/option" />
 
@@ -64,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_radio_button"
                         android:layout_toEndOf="@+id/anchor"
-                        android:background="@drawable/rbtn_selector"
+                        android:background="@drawable/radiobutton_selector"
                         android:button="@null"
                         android:text="@string/option" />
 
@@ -75,7 +75,7 @@
                         android:layout_below="@+id/radioOption1"
                         android:layout_margin="@dimen/margin_radio_button"
                         android:layout_toStartOf="@+id/anchor"
-                        android:background="@drawable/rbtn_selector"
+                        android:background="@drawable/radiobutton_selector"
                         android:button="@null"
                         android:text="@string/option" />
 
@@ -86,7 +86,7 @@
                         android:layout_below="@+id/radioOption2"
                         android:layout_margin="@dimen/margin_radio_button"
                         android:layout_toEndOf="@+id/anchor"
-                        android:background="@drawable/rbtn_selector"
+                        android:background="@drawable/radiobutton_selector"
                         android:button="@null"
                         android:text="@string/option" />
 
@@ -117,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_radio_button"
                         android:layout_toStartOf="@+id/anchorBoolean"
-                        android:background="@drawable/rbtn_selector"
+                        android:background="@drawable/radiobutton_selector"
                         android:button="@null"
                         android:text="@string/option" />
 
@@ -127,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_radio_button"
                         android:layout_toEndOf="@+id/anchorBoolean"
-                        android:background="@drawable/rbtn_selector"
+                        android:background="@drawable/radiobutton_selector"
                         android:button="@null"
                         android:text="@string/option" />
 

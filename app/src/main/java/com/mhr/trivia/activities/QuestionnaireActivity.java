@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.mhr.trivia.R;
 import com.mhr.trivia.adapters.QuestionnairesAdapter;
-import com.mhr.trivia.interfaces.AnswerListner;
+import com.mhr.trivia.interfaces.AnswerListener;
 import com.mhr.trivia.model.Answer.Answer;
 import com.mhr.trivia.model.Trivia.Question;
 
@@ -19,12 +19,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class QuestionaireActivity extends AppCompatActivity implements AnswerListner {
+public class QuestionnaireActivity extends AppCompatActivity implements AnswerListener {
 
     private ArrayList<Question> questionList;
     private RecyclerView recyclerViewQuestions;
     private ArrayList<Answer> answerList;
-    private AnswerListner answerListner;
+    private AnswerListener answerListener;
     private Answer answerStatus = new Answer();
     private String questionnaireType = "";
 
@@ -33,7 +33,7 @@ public class QuestionaireActivity extends AppCompatActivity implements AnswerLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionaire);
 
-        answerListner = (AnswerListner) this;
+        answerListener = (AnswerListener) this;
 
         answerList = new ArrayList<>();
         recyclerViewQuestions = (RecyclerView) findViewById(R.id.recycler_view_questions);
@@ -42,22 +42,22 @@ public class QuestionaireActivity extends AppCompatActivity implements AnswerLis
         questionList = (ArrayList<Question>) getIntent().getSerializableExtra(getString(R.string.list));
         questionnaireType = getIntent().getStringExtra(getString(R.string.type_of_questionaire));
 
-        List<ArrayList<String>> listshuffledAnswers = new ArrayList<>();
+        List<ArrayList<String>> listShuffledAnswers = new ArrayList<>();
 
         answerStatus.setAnswered(false);
         answerStatus.setAnswerCorrect(false);
-        for (Question question : questionList) {
+        for (Question question : questionList) {    //ADD ALL ANSWERS INTO SEPARATE ARRAY AND SHUFFLE
             ArrayList<String> shuffledAnswers = new ArrayList<>();
             for (String answer : question.getIncorrect_answers()) {
                 shuffledAnswers.add(answer);
             }
             shuffledAnswers.add(question.getCorrect_answer() + "");
             Collections.shuffle(shuffledAnswers);
-            listshuffledAnswers.add(shuffledAnswers);
+            listShuffledAnswers.add(shuffledAnswers);
             answerList.add(answerStatus);
         }
 
-        recyclerViewQuestions.setAdapter(new QuestionnairesAdapter(questionList, listshuffledAnswers, answerListner, questionnaireType, R.layout.list_item_questionaires, this));
+        recyclerViewQuestions.setAdapter(new QuestionnairesAdapter(questionList, listShuffledAnswers, answerListener, questionnaireType, R.layout.list_item_questionaires, this));
 
         ((AppCompatButton) findViewById(R.id.buttonCompleteTrivia)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,16 +72,16 @@ public class QuestionaireActivity extends AppCompatActivity implements AnswerLis
                         }
                     } else {
                         isAllAnswersCompleted = false;
-                        Toast.makeText(QuestionaireActivity.this, getString(R.string.error_incomplete_answers), Toast.LENGTH_LONG).show();
+                        Toast.makeText(QuestionnaireActivity.this, getString(R.string.error_incomplete_answers), Toast.LENGTH_LONG).show();
                         break;
                     }
                 }
                 if (isAllAnswersCompleted) {
-                    Snackbar.make(v, getString(R.string.message_score) + " " + score, Snackbar.LENGTH_INDEFINITE)
+                    Snackbar.make(v, getString(R.string.message_score) + " " + score + " " + getString(R.string.message_score_out_of)+ " " + answerList.size(), Snackbar.LENGTH_INDEFINITE)
                             .setAction("Done", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    //finish();
+                                    finish();
                                 }
                             }).show();
                 }
