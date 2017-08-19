@@ -1,6 +1,7 @@
 package com.mhr.trivia.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -62,17 +63,28 @@ public class QuestionaireActivity extends AppCompatActivity implements AnswerLis
             @Override
             public void onClick(View v) {
                 int score = 0;
+                boolean isAllAnswersCompleted = false;
                 for (Answer answer : answerList) {
                     if (answer.isAnswered()) {
+                        isAllAnswersCompleted = true;
                         if (answer.isAnswerCorrect()) {
                             score++;
                         }
                     } else {
+                        isAllAnswersCompleted = false;
                         Toast.makeText(QuestionaireActivity.this, getString(R.string.error_incomplete_answers), Toast.LENGTH_LONG).show();
                         break;
                     }
                 }
-                Toast.makeText(QuestionaireActivity.this, getString(R.string.message_score) + score, Toast.LENGTH_LONG).show();
+                if (isAllAnswersCompleted) {
+                    Snackbar.make(v, getString(R.string.message_score) + " " + score, Snackbar.LENGTH_INDEFINITE)
+                            .setAction("Done", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //finish();
+                                }
+                            }).show();
+                }
             }
         });
     }

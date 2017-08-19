@@ -7,7 +7,7 @@
             <padding android:top="@dimen/fab_margin" />
             <padding android:left="@dimen/fab_margin" />
             <padding android:right="@dimen/fab_margin" />
-            <solid android:color="#1c5fab" />
+            <solid android:color="#65a1e7" />
             <corners android:bottomRightRadius="@dimen/radius_radio_button"
                 android:bottomLeftRadius="@dimen/radius_radio_button"
                 android:topLeftRadius="@dimen/radius_radio_button"
@@ -20,7 +20,7 @@
             <padding android:top="@dimen/fab_margin" />
             <padding android:left="@dimen/fab_margin" />
             <padding android:right="@dimen/fab_margin" />
-            <solid android:color="#ffffff" />
+            <solid android:color="#d6e0f5" />
             <corners android:bottomRightRadius="@dimen/radius_radio_button"
                 android:bottomLeftRadius="@dimen/radius_radio_button"
                 android:topLeftRadius="@dimen/radius_radio_button"

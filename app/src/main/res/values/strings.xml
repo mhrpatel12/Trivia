@@ -18,7 +18,7 @@
     <string name="question">Some sort of question</string>
     <string name="title_get_score">Get score !</string>
     <string name="error_incomplete_answers">Please complete all answers!</string>
-    <string name="message_score">Your score is -</string>
+    <string name="message_score">Your score is - </string>
     <string name="category">Categories</string>
     <string name="difficulty">Difficulty</string>
     <string name="type">Type</string>

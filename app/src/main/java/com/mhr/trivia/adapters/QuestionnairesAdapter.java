@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,22 +49,22 @@ public class QuestionnairesAdapter extends RecyclerView.Adapter<QuestionnairesAd
 
     @Override
     public void onBindViewHolder(final QuestionnairesAdapter.RouteViewHolder holder, final int position) {
-        holder.txtQuestion.setText(listQuestionnaires.get(position).getQuestion() + "");
+        holder.txtQuestion.setText(Html.fromHtml(listQuestionnaires.get(position).getQuestion() + ""));
 
         if (questionnaireType.equals(mContext.getString(R.string.type_multiple))) {
             holder.layoutMultipleChoiceQuestions.setVisibility(View.VISIBLE);
             holder.layoutBooleanQuestions.setVisibility(View.GONE);
 
-            holder.radioOption1.setText(listShuffledAnswers.get(position).get(0));
-            holder.radioOption2.setText(listShuffledAnswers.get(position).get(1));
-            holder.radioOption3.setText(listShuffledAnswers.get(position).get(2));
-            holder.radioOption4.setText(listShuffledAnswers.get(position).get(3));
+            holder.radioOption1.setText(Html.fromHtml(listShuffledAnswers.get(position).get(0)));
+            holder.radioOption2.setText(Html.fromHtml(listShuffledAnswers.get(position).get(1)));
+            holder.radioOption3.setText(Html.fromHtml(listShuffledAnswers.get(position).get(2)));
+            holder.radioOption4.setText(Html.fromHtml(listShuffledAnswers.get(position).get(3)));
 
             holder.radioGroupMultiChoiceQuestions.setOnCheckedChangeListener(new RelativeRadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RelativeRadioGroup group, @IdRes int checkedId) {
                     AppCompatRadioButton radioButton = (AppCompatRadioButton) holder.itemView.findViewById(checkedId);
-                    if (radioButton.getText().equals(listQuestionnaires.get(position).getCorrect_answer())) {
+                    if (radioButton.getText().equals(Html.fromHtml(listQuestionnaires.get(position).getCorrect_answer()))) {
                         if (answerListner != null) {
                             answerListner.updateAnswer(position, true);
                         }
