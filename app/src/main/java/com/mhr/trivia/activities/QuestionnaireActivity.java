@@ -57,7 +57,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements AnswerLi
             answerList.add(answerStatus);
         }
 
-        recyclerViewQuestions.setAdapter(new QuestionnairesAdapter(questionList, listShuffledAnswers, answerListener, questionnaireType, R.layout.list_item_questionaires, this));
+        recyclerViewQuestions.setAdapter(new QuestionnairesAdapter(questionList, listShuffledAnswers, answerListener, questionnaireType, this));
 
         ((AppCompatButton) findViewById(R.id.buttonCompleteTrivia)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +77,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements AnswerLi
                     }
                 }
                 if (isAllAnswersCompleted) {
-                    Snackbar.make(v, getString(R.string.message_score) + " " + score + " " + getString(R.string.message_score_out_of)+ " " + answerList.size(), Snackbar.LENGTH_INDEFINITE)
+                    Snackbar.make(v, getString(R.string.message_score) + " " + score + " " + getString(R.string.message_score_out_of) + " " + answerList.size(), Snackbar.LENGTH_INDEFINITE)
                             .setAction("Done", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {

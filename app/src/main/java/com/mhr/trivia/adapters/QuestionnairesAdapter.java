@@ -8,7 +8,6 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mhr.trivia.R;
@@ -23,44 +22,45 @@ import java.util.List;
  * Created by Mihir on 06-07-2017.
  */
 
-public class QuestionnairesAdapter extends RecyclerView.Adapter<QuestionnairesAdapter.RouteViewHolder> {
+public class QuestionnairesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Question> listQuestionnaires;
-    private int rowLayout;
     private Context mContext;
     private List<ArrayList<String>> listShuffledAnswers;
     private AnswerListener answerListener;
     private String questionnaireType = "";
 
-    public QuestionnairesAdapter(List<Question> listQuestionnaires, List<ArrayList<String>> listShuffledAnswers, AnswerListener answerListener, String questionnaireType, int rowLayout, Context context) {
+    public QuestionnairesAdapter(List<Question> listQuestionnaires, List<ArrayList<String>> listShuffledAnswers, AnswerListener answerListener, String questionnaireType, Context context) {
         this.listQuestionnaires = listQuestionnaires;
         this.listShuffledAnswers = listShuffledAnswers;
-        this.rowLayout = rowLayout;
         this.mContext = context;
         this.answerListener = answerListener;
         this.questionnaireType = questionnaireType;
     }
 
     @Override
-    public RouteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(rowLayout, parent, false);
-        return new RouteViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (questionnaireType.equals(mContext.getString(R.string.type_multiple))) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_multiple_questionaires, parent, false);
+            return new MultiChoiceViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_boolean_questionaires, parent, false);
+            return new BooleanViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(final QuestionnairesAdapter.RouteViewHolder holder, final int position) {
-        holder.txtQuestion.setText(Html.fromHtml(listQuestionnaires.get(position).getQuestion() + ""));
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         if (questionnaireType.equals(mContext.getString(R.string.type_multiple))) {
-            holder.layoutMultipleChoiceQuestions.setVisibility(View.VISIBLE);
-            holder.layoutBooleanQuestions.setVisibility(View.GONE);
+            ((MultiChoiceViewHolder) holder).txtQuestion.setText(Html.fromHtml(listQuestionnaires.get(position).getQuestion() + ""));
 
-            holder.radioOption1.setText(Html.fromHtml(listShuffledAnswers.get(position).get(0)));
-            holder.radioOption2.setText(Html.fromHtml(listShuffledAnswers.get(position).get(1)));
-            holder.radioOption3.setText(Html.fromHtml(listShuffledAnswers.get(position).get(2)));
-            holder.radioOption4.setText(Html.fromHtml(listShuffledAnswers.get(position).get(3)));
+            ((MultiChoiceViewHolder) holder).radioOption1.setText(Html.fromHtml(listShuffledAnswers.get(position).get(0)));
+            ((MultiChoiceViewHolder) holder).radioOption2.setText(Html.fromHtml(listShuffledAnswers.get(position).get(1)));
+            ((MultiChoiceViewHolder) holder).radioOption3.setText(Html.fromHtml(listShuffledAnswers.get(position).get(2)));
+            ((MultiChoiceViewHolder) holder).radioOption4.setText(Html.fromHtml(listShuffledAnswers.get(position).get(3)));
 
-            holder.radioGroupMultiChoiceQuestions.setOnCheckedChangeListener(new RelativeRadioGroup.OnCheckedChangeListener() {
+            ((MultiChoiceViewHolder) holder).radioGroupMultiChoiceQuestions.setOnCheckedChangeListener(new RelativeRadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RelativeRadioGroup group, @IdRes int checkedId) {
                     AppCompatRadioButton radioButton = (AppCompatRadioButton) holder.itemView.findViewById(checkedId);
@@ -76,13 +76,12 @@ public class QuestionnairesAdapter extends RecyclerView.Adapter<QuestionnairesAd
                 }
             });
         } else if (questionnaireType.equals(mContext.getString(R.string.type_boolean))) {
-            holder.layoutMultipleChoiceQuestions.setVisibility(View.GONE);
-            holder.layoutBooleanQuestions.setVisibility(View.VISIBLE);
+            ((BooleanViewHolder) holder).txtQuestion.setText(Html.fromHtml(listQuestionnaires.get(position).getQuestion() + ""));
 
-            holder.radioOptionTrue.setText(listShuffledAnswers.get(position).get(0));
-            holder.radioOptionFalse.setText(listShuffledAnswers.get(position).get(1));
+            ((BooleanViewHolder) holder).radioOptionTrue.setText(listShuffledAnswers.get(position).get(0));
+            ((BooleanViewHolder) holder).radioOptionFalse.setText(listShuffledAnswers.get(position).get(1));
 
-            holder.radioGroupBooleanQuestions.setOnCheckedChangeListener(new RelativeRadioGroup.OnCheckedChangeListener() {
+            ((BooleanViewHolder) holder).radioGroupBooleanQuestions.setOnCheckedChangeListener(new RelativeRadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RelativeRadioGroup group, @IdRes int checkedId) {
                     AppCompatRadioButton radioButton = (AppCompatRadioButton) holder.itemView.findViewById(checkedId);
@@ -115,7 +114,27 @@ public class QuestionnairesAdapter extends RecyclerView.Adapter<QuestionnairesAd
         return position;
     }
 
-    public class RouteViewHolder extends RecyclerView.ViewHolder {
+    public class BooleanViewHolder extends RecyclerView.ViewHolder {
+
+        TextView txtQuestion;
+
+        AppCompatRadioButton radioOptionTrue;
+        AppCompatRadioButton radioOptionFalse;
+
+        RelativeRadioGroup radioGroupBooleanQuestions;
+
+        public BooleanViewHolder(final View itemView) {
+            super(itemView);
+            txtQuestion = (TextView) itemView.findViewById(R.id.txtQuestion);
+
+            radioOptionTrue = (AppCompatRadioButton) itemView.findViewById(R.id.radioOptionTrue);
+            radioOptionFalse = (AppCompatRadioButton) itemView.findViewById(R.id.radioOptionFalse);
+
+            radioGroupBooleanQuestions = (RelativeRadioGroup) itemView.findViewById(R.id.radioGroupBooleanOptions);
+        }
+    }
+
+    public class MultiChoiceViewHolder extends RecyclerView.ViewHolder {
 
         TextView txtQuestion;
         AppCompatRadioButton radioOption1;
@@ -123,16 +142,9 @@ public class QuestionnairesAdapter extends RecyclerView.Adapter<QuestionnairesAd
         AppCompatRadioButton radioOption3;
         AppCompatRadioButton radioOption4;
 
-        AppCompatRadioButton radioOptionTrue;
-        AppCompatRadioButton radioOptionFalse;
-
         RelativeRadioGroup radioGroupMultiChoiceQuestions;
-        RelativeRadioGroup radioGroupBooleanQuestions;
 
-        LinearLayout layoutMultipleChoiceQuestions;
-        LinearLayout layoutBooleanQuestions;
-
-        public RouteViewHolder(final View itemView) {
+        public MultiChoiceViewHolder(final View itemView) {
             super(itemView);
             txtQuestion = (TextView) itemView.findViewById(R.id.txtQuestion);
 
@@ -141,14 +153,7 @@ public class QuestionnairesAdapter extends RecyclerView.Adapter<QuestionnairesAd
             radioOption3 = (AppCompatRadioButton) itemView.findViewById(R.id.radioOption3);
             radioOption4 = (AppCompatRadioButton) itemView.findViewById(R.id.radioOption4);
 
-            radioOptionTrue = (AppCompatRadioButton) itemView.findViewById(R.id.radioOptionTrue);
-            radioOptionFalse = (AppCompatRadioButton) itemView.findViewById(R.id.radioOptionFalse);
-
             radioGroupMultiChoiceQuestions = (RelativeRadioGroup) itemView.findViewById(R.id.radioGroupMultiOptions);
-            radioGroupBooleanQuestions = (RelativeRadioGroup) itemView.findViewById(R.id.radioGroupBooleanOptions);
-
-            layoutMultipleChoiceQuestions = (LinearLayout) itemView.findViewById(R.id.layoutMultiChoice);
-            layoutBooleanQuestions = (LinearLayout) itemView.findViewById(R.id.layoutBoolean);
         }
     }
 }
